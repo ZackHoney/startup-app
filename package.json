@@ -14,10 +14,10 @@
     "react-dom": "$react-dom"
   },
   "dependencies": {
-    "next": "15.3.2",
+    "next": "^15.3.2",
     "next-auth": "^5.0.0-beta.28",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -26,7 +26,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.3.2",
+    "eslint-config-next": "^15.4.0-canary.51",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
