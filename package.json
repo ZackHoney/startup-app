@@ -1,5 +1,5 @@
 {
-  "name": "startup-app",
+  "name": "yc_directory",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,7 +11,8 @@
   "packageManager": "npm@10.5.2",
   "overrides": {
     "react": "$react",
-    "react-dom": "$react-dom"
+    "react-dom": "$react-dom",
+    "next": "$next"
   },
   "dependencies": {
     "@tailwindcss/typography": "github:tailwindcss/typography",
