@@ -19,7 +19,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
             <p className="tag">{formatDate(post?._createdAt)}</p>
 
             <h1 className='heading'>{post.title}</h1>
-            <p className="sub-heading !max-w-5xl">{post.description}</p>   
+            <p className="sub-heading !max-w-5xl">{post.description}</p>
         </section >
     </>
 
