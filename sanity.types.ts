@@ -28,7 +28,7 @@ export type Startup = {
     [internalGroqTypeReferenceTo]?: "author";
   };
   views?: number;
-  discription?: string;
+  description?: string;
   category?: string;
   image?: string;
   pitch?: string;
@@ -205,7 +205,7 @@ export type STARTUP_QUERYResult = Array<{
     bio: string | null;
   } | null;
   views: number | null;
-  description: null;
+  description: string | null;
   category: string | null;
   image: string | null;
 }>;
@@ -224,7 +224,7 @@ export type STARTUP_BY_ID_QUERYResult = {
     bio: string | null;
   } | null;
   views: number | null;
-  description: null;
+  description: string | null;
   category: string | null;
   image: string | null;
   pitch: string | null;
