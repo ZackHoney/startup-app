@@ -222,7 +222,7 @@ export type STARTUP_BY_ID_QUERYResult = {
     username: string | null;
     image: string | null;
     bio: string | null;
-  } | null;
+  };
   views: number | null;
   description: string | null;
   category: string | null;
