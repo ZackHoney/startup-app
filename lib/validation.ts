@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import {z} from 'zod'
 
 export const formSchema = z.object({
     title: z.string().min(3).max(100),
@@ -9,13 +9,17 @@ export const formSchema = z.object({
         .url()
         .refine(async (url) => {
             try {
-                const res = await fetch(url, { method: 'HEAD' });
-                const contentType = res.headers.get('content-type');
+                const res = await fetch(url, { method: "HEAD" });
+                const contentType = res.headers.get("content-type");
 
-                return contentType?.startsWith('image/');
+                return contentType?.startsWith("image/");
             } catch {
                 return false;
             }
         }),
-    pitch: z.string().min(10)
-})
+    pitch: z.string().min(10),
+});
+
+
+
+

@@ -11,8 +11,8 @@ import { formSchema } from '@/lib/validation';
 const StartupForm = () => {
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [pitch, setPitch] = useState<string>('');
-
-    const handleFormSubmit = async (prevState: any, formData: FormData) => {
+   
+    const handleFormSubmit = async (prevState: unknown, formData: FormData) => {
         try {
             const formValues = {
                 title: formData.get('title') as string,
@@ -37,11 +37,11 @@ const StartupForm = () => {
 
     }
 
-    const [state, formAction, isPending ] = useActionState(handleFormSubmit, { error: '', status: 'INITIAL',},);
+    const [state, formAction, isPending ] = useActionState(handleFormSubmit, { error: '', status: 'INITIAL'});
 
 
     return (
-        <form action={() => { }} className='startup-form'>
+        <form action={formAction} className='startup-form'>
             <div>
                 <label htmlFor="title" className="startup-form_label">
                     Title
@@ -138,3 +138,4 @@ const StartupForm = () => {
 }
 
 export default StartupForm;
+
