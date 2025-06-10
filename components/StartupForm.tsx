@@ -7,11 +7,22 @@ import MDEditor from '@uiw/react-md-editor'
 import { Button } from './ui/button';
 import { Send } from 'lucide-react';
 import { formSchema } from '@/lib/validation';
+import z from 'zod';
+import { useToast } from '@/hooks/use-toast';
+import { createPitch } from '@/lib/actions';
+import { useRouter } from 'next/navigation';
 
 const StartupForm = () => {
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [pitch, setPitch] = useState<string>('');
-   
+    const { toast } = useToast();
+    const router = useRouter();
+    type CreatePitchResult = {
+        status: string;
+        id?: string;
+        [key: string]: unknown;
+    };
+
     const handleFormSubmit = async (prevState: unknown, formData: FormData) => {
         try {
             const formValues = {
@@ -24,20 +35,51 @@ const StartupForm = () => {
 
             await formSchema.parseAsync(formValues);
 
-            console.log(formValues)
+            const result = await createPitch(prevState, formData, pitch) as CreatePitchResult;
 
-            // const result = await createIdea(prevState, formData, pitch);
+            if (result.status === 'SUCCESS') {
 
-            // console.log(result)
+                toast({
+                    title: 'Success',
+                    description: "Your startup pitch has been created successfully",
+                });
+
+                router.push(`/startup/${result._id}`)
+            }
+
+            return result;
         } catch (error) {
-            
+            if (error instanceof z.ZodError) {
+                const fieldErrors = error.flatten().fieldErrors;
+                setErrors(fieldErrors as unknown as Record<string, string>);
+
+                toast({
+                    title: 'Error',
+                    description: "Please check your inputs and try again",
+                    variant: 'destructive'
+                })
+
+                return { ...prevState, error: 'Validation: failed', status: 'ERROR' }
+            }
+
+            toast({
+                title: 'Error',
+                description: "An unexcpected error has occurred",
+                variant: 'destructive'
+            })
+
+            return {
+                ...prevState,
+                error: 'An unexcpected error has occurred',
+                status: "ERROR"
+            }
         } finally {
 
         }
 
     }
 
-    const [state, formAction, isPending ] = useActionState(handleFormSubmit, { error: '', status: 'INITIAL'});
+    const [state, formAction, isPending] = useActionState(handleFormSubmit, { error: '', status: 'INITIAL' });
 
 
     return (
@@ -106,14 +148,14 @@ const StartupForm = () => {
                 <label htmlFor="pitch" className="startup-form_label">
                     Pitch
                 </label>
-                
-                <MDEditor 
+
+                <MDEditor
                     value={pitch}
                     onChange={(value) => setPitch(value as string)}
                     id='pitch'
                     preview='edit'
                     height={300}
-                    style={{ borderRadius: 20, overflow: 'hidden'}}
+                    style={{ borderRadius: 20, overflow: 'hidden' }}
                     textareaProps={{
                         placeholder: 'Briefly describe your idea and what problem it solves',
                     }}
@@ -125,14 +167,14 @@ const StartupForm = () => {
                 {errors.pitch && <p className='startup-form_error'>{errors.pitch}</p>}
             </div>
 
-            <Button 
-                type='submit' 
+            <Button
+                type='submit'
                 className='startup-form_btn text-white'
                 disabled={isPending}
-                >
-                    {isPending ? "Submitting..." : "Submit Your Pitch"}
-                    <Send className='size-6 ml-2' />
-                </Button>
+            >
+                {isPending ? "Submitting..." : "Submit Your Pitch"}
+                <Send className='size-6 ml-2' />
+            </Button>
         </form>
     )
 }

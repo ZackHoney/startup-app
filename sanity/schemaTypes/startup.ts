@@ -28,6 +28,7 @@ export const startup = defineType({
         defineField({
             name: 'description',
             type: 'text',
+            validation: (Rule) => Rule.min(1)
         }),
         defineField({
             name: 'category',
