@@ -15,9 +15,7 @@ const nextConfig: NextConfig = {
       ppr: 'incremental',
       after: true,
     },
-    devIndicators: {
-      position: 'bottom-left'
-    }
+    devIndicators: false
 };
 
 export default withSentryConfig(nextConfig, {
